@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -eu
+set -eux
 
 # Usage:
 #   error MESSAGE
@@ -104,6 +104,8 @@ start_group "Setting up build container"
 # Otherwise git would complain, since a hook is run as root but the workspace
 # repository belongs to a different user.
 git config --file="$gitconfig_file" safe.directory '*'
+
+docker exec "$container_id" find /github -ls
 
 docker exec "$container_id" install \
 	--mode=644 \
